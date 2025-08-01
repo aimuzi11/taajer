@@ -1,0 +1,29 @@
+[vite] connecting...
+[vite] connected.
+Warning: A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components
+    at input
+    at _c (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/input.tsx:20:11)
+    at https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-EVLBUYTV.js?v=6b592a10:79:13
+    at https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-EVLBUYTV.js?v=6b592a10:56:13
+    at https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/form.tsx:130:9
+    at div
+    at https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/form.tsx:72:6
+    at Controller (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-4BFJKWC4.js?v=6b592a10:298:35)
+    at FormField (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/form.tsx:33:6)
+    at div
+    at div
+    at form
+    at FormProvider (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-4BFJKWC4.js?v=6b592a10:102:11)
+    at div
+    at _c9 (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/card.tsx:114:12)
+    at div
+    at _c (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/components/ui/card.tsx:20:11)
+    at div
+    at Onboarding (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/pages/onboarding.tsx:57:41)
+    at Route (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6b592a10:323:16)
+    at Switch (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6b592a10:379:17)
+    at Router (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/src/App.tsx?v=unujj9uBkEsGADY_ZRGnv:35:37)
+    at Provider (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=6b592a10:38:15)
+    at TooltipProvider (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6b592a10:60:5)
+    at QueryClientProvider (https://f7c707d7-a9d1-4657-9419-efc3a84a0f49-00-klrxoaakurx8.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=6b592a10:2805:3)
+    at App

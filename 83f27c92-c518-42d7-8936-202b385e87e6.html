@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#10A37F',
+                        'chat-bg': '#F7F7F8',
+                        'user-msg': '#EBEBEB',
+                        'ai-msg': '#FFFFFF'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-chat-bg font-inter text-gray-800 h-screen flex flex-col">
+    
+    <!-- @COMPONENT: ChatHeader -->
+    <header class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-brand-green rounded-full flex items-center justify-center">
+                <i class="fas fa-robot text-white text-sm"></i>
+            </div>
+            <div>
+                <h1 class="text-lg font-semibold text-gray-900">AI Assistant</h1>
+                <p class="text-xs text-gray-500" data-bind="connectionStatus">Connected</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" data-event="click:clearChat" title="Clear conversation">
+                <i class="fas fa-trash text-gray-500 text-sm"></i>
+            </button>
+            <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" data-event="click:toggleSettings" title="Settings">
+                <i class="fas fa-cog text-gray-500 text-sm"></i>
+            </button>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: ChatHeader -->
+
+    <!-- @COMPONENT: ChatContainer -->
+    <main class="flex-1 overflow-hidden flex flex-col">
+        
+        <!-- Messages Area -->
+        <!-- @COMPONENT: MessagesArea -->
+        <div class="flex-1 overflow-y-auto px-4 py-6 space-y-6" id="messagesContainer" data-implementation="Auto-scroll to bottom on new messages">
+            
+            <!-- Welcome Message -->
+            <div class="flex justify-center mb-8">
+                <div class="text-center max-w-md">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Welcome to AI Assistant</h2>
+                    <p class="text-gray-600 text-sm">Start a conversation by asking me anything. I'm here to help!</p>
+                </div>
+            </div>
+
+            <!-- @MAP: messages.map(message => ( -->
+            <!-- User Message Example -->
+            <div class="flex justify-end">
+                <div class="max-w-xs lg:max-w-md xl:max-w-lg">
+                    <div class="bg-user-msg rounded-2xl rounded-br-md px-4 py-3 shadow-sm" data-mock="true">
+                        <p class="text-sm leading-relaxed" data-bind="message.content">Hello! Can you help me understand how machine learning works?</p>
+                    </div>
+                    <div class="flex justify-end mt-1">
+                        <span class="text-xs text-gray-500" data-bind="message.timestamp">2:34 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Message Example -->
+            <div class="flex justify-start">
+                <div class="flex space-x-3 max-w-xs lg:max-w-md xl:max-w-2xl">
+                    <div class="w-8 h-8 bg-brand-green rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <i class="fas fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-ai-msg border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm" data-mock="true">
+                            <p class="text-sm leading-relaxed mb-3" data-bind="message.content">
+                                Machine learning is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed. Here's a simple breakdown:
+                            </p>
+                            <ul class="text-sm space-y-1 ml-4 list-disc list-outside">
+                                <li><strong>Data:</strong> The foundation - large amounts of information</li>
+                                <li><strong>Algorithms:</strong> Mathematical models that find patterns</li>
+                                <li><strong>Training:</strong> The process of teaching the model</li>
+                                <li><strong>Prediction:</strong> Making decisions on new, unseen data</li>
+                            </ul>
+                            <p class="text-sm leading-relaxed mt-3">
+                                Think of it like teaching a child to recognize cats - you show them many cat pictures until they can identify cats in new photos they've never seen before.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-xs text-gray-500" data-bind="message.timestamp">2:34 PM</span>
+                            <div class="flex space-x-1">
+                                <button class="p-1 rounded hover:bg-gray-100 transition-colors" data-event="click:copyMessage" title="Copy message">
+                                    <i class="fas fa-copy text-gray-400 text-xs"></i>
+                                </button>
+                                <button class="p-1 rounded hover:bg-gray-100 transition-colors" data-event="click:likeMessage" title="Like message">
+                                    <i class="far fa-thumbs-up text-gray-400 text-xs"></i>
+                                </button>
+                                <button class="p-1 rounded hover:bg-gray-100 transition-colors" data-event="click:dislikeMessage" title="Dislike message">
+                                    <i class="far fa-thumbs-down text-gray-400 text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Follow-up Message -->
+            <div class="flex justify-end">
+                <div class="max-w-xs lg:max-w-md xl:max-w-lg">
+                    <div class="bg-user-msg rounded-2xl rounded-br-md px-4 py-3 shadow-sm" data-mock="true">
+                        <p class="text-sm leading-relaxed" data-bind="message.content">That's a great explanation! Can you give me an example of a real-world application?</p>
+                    </div>
+                    <div class="flex justify-end mt-1">
+                        <span class="text-xs text-gray-500" data-bind="message.timestamp">2:35 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Typing Indicator (Show when AI is responding) -->
+            <!-- @STATE: isTyping:boolean = false -->
+            <div class="flex justify-start" id="typingIndicator" style="display: none;" data-implementation="Show/hide based on API response state">
+                <div class="flex space-x-3">
+                    <div class="w-8 h-8 bg-brand-green rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="bg-ai-msg border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+
+        </div>
+        <!-- @END_COMPONENT: MessagesArea -->
+
+        <!-- Error Message Display -->
+        <!-- @STATE: error:string = null -->
+        <div id="errorMessage" class="px-4 py-2 bg-red-50 border-l-4 border-red-400 text-red-700 text-sm" style="display: none;" data-implementation="Show when API errors occur">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <span data-bind="error.message">Unable to connect to AI service. Please try again.</span>
+                <button class="ml-auto text-red-500 hover:text-red-700" data-event="click:dismissError">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <!-- @COMPONENT: MessageInput -->
+        <div class="border-t border-gray-200 bg-white px-4 py-4">
+            <form class="flex space-x-3" data-event="submit:sendMessage" data-implementation="Prevent default, validate input, call API">
+                <div class="flex-1 relative">
+                    <textarea 
+                        rows="1"
+                        placeholder="Type your message here..."
+                        class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition-all duration-200 text-sm leading-relaxed"
+                        id="messageInput"
+                        data-implementation="Auto-resize, max-height limit, handle Enter key for send"
+                        data-bind="inputValue"
+                        data-mock="true"
+                    ></textarea>
+                    <button 
+                        type="button"
+                        class="absolute right-2 top-2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                        data-event="click:attachFile"
+                        title="Attach file"
+                        data-implementation="File upload functionality"
+                    >
+                        <i class="fas fa-paperclip text-sm"></i>
+                    </button>
+                </div>
+                <button 
+                    type="submit"
+                    class="px-4 py-3 bg-brand-green text-white rounded-xl hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-brand-green focus:ring-offset-2 transition-all duration-200 flex items-center justify-center min-w-[48px] disabled:opacity-50 disabled:cursor-not-allowed"
+                    id="sendButton"
+                    data-implementation="Disable when sending or input empty"
+                    data-bind="isLoading ? 'Sending...' : 'Send'"
+                >
+                    <i class="fas fa-paper-plane text-sm"></i>
+                </button>
+            </form>
+            
+            <!-- Input Helper Text -->
+            <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
+                <span>Press Enter to send, Shift+Enter for new line</span>
+                <span data-bind="characterCount">0/2000</span>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: MessageInput -->
+
+    </main>
+    <!-- @END_COMPONENT: ChatContainer -->
+
+    <script>
+        (function() {
+            // TODO: Implement business logic, API calls, and state management
+            
+            // Auto-resize textarea
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const messagesContainer = document.getElementById('messagesContainer');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (messageInput) {
+                messageInput.addEventListener('input', function() {
+                    // Auto-resize textarea
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                    
+                    // Update character count
+                    const charCount = document.querySelector('[data-bind="characterCount"]');
+                    if (charCount) {
+                        charCount.textContent = `${this.value.length}/2000`;
+                    }
+                    
+                    // Enable/disable send button
+                    if (sendButton) {
+                        sendButton.disabled = this.value.trim().length === 0;
+                    }
+                });
+
+                // Handle Enter key for sending
+                messageInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        // TODO: Trigger send message
+                        console.log('Send message:', this.value);
+                    }
+                });
+            }
+
+            // Scroll to bottom function
+            function scrollToBottom() {
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }
+
+            // Simulate typing indicator
+            function showTypingIndicator() {
+                if (typingIndicator) {
+                    typingIndicator.style.display = 'flex';
+                    scrollToBottom();
+                }
+            }
+
+            function hideTypingIndicator() {
+                if (typingIndicator) {
+                    typingIndicator.style.display = 'none';
+                }
+            }
+
+            // Error handling
+            function showError(message) {
+                if (errorMessage) {
+                    errorMessage.querySelector('[data-bind="error.message"]').textContent = message;
+                    errorMessage.style.display = 'block';
+                }
+            }
+
+            function hideError() {
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            // Event listeners for buttons
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('[data-event]');
+                if (!target) return;
+
+                const event = target.getAttribute('data-event');
+                
+                switch(event) {
+                    case 'click:clearChat':
+                        // TODO: Clear conversation history
+                        console.log('Clear chat clicked');
+                        break;
+                    case 'click:toggleSettings':
+                        // TODO: Show settings modal
+                        console.log('Settings clicked');
+                        break;
+                    case 'click:copyMessage':
+                        // TODO: Copy message to clipboard
+                        console.log('Copy message clicked');
+                        break;
+                    case 'click:likeMessage':
+                        // TODO: Rate message positively
+                        console.log('Like message clicked');
+                        break;
+                    case 'click:dislikeMessage':
+                        // TODO: Rate message negatively
+                        console.log('Dislike message clicked');
+                        break;
+                    case 'click:attachFile':
+                        // TODO: Open file picker
+                        console.log('Attach file clicked');
+                        break;
+                    case 'click:dismissError':
+                        hideError();
+                        break;
+                }
+            });
+
+            // Form submission
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('[data-event="submit:sendMessage"]')) {
+                    e.preventDefault();
+                    
+                    const input = messageInput.value.trim();
+                    if (!input) return;
+
+                    // TODO: Send message to API
+                    console.log('Sending message:', input);
+                    
+                    // Simulate API call
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        // TODO: Add AI response to chat
+                    }, 2000);
+
+                    // Clear input
+                    messageInput.value = '';
+                    messageInput.style.height = 'auto';
+                    
+                    // Update character count
+                    const charCount = document.querySelector('[data-bind="characterCount"]');
+                    if (charCount) {
+                        charCount.textContent = '0/2000';
+                    }
+                }
+            });
+
+            // Initialize
+            scrollToBottom();
+            
+        })();
+    </script>
+
+</body>
+</html>
