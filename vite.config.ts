@@ -4,17 +4,17 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  root: ".", // root folder is project root
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"), // '@' points to /src
-    },
-  },
+  root: ".",
   build: {
-    outDir: "dist", // output directory
+    outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, "index.html"), // point to root index.html
+      input: path.resolve(__dirname, "index.html"),
+    },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
     },
   },
 });
