@@ -4,17 +4,17 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  root: ".", // root is project root where index.html lives
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"), // if you have a src folder, otherwise remove
-    },
-  },
+  root: ".", // project root with index.html and main.tsx
   build: {
-    outDir: "dist", // build output folder
+    outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, "index.html"), // point to root index.html
+      input: path.resolve(__dirname, "index.html"), // root index.html
+    },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"), // optional if you have src folder, else remove
     },
   },
 });
