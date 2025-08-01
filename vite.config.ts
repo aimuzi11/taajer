@@ -4,17 +4,17 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  root: ".",
-  build: {
-    outDir: "dist",
-    emptyOutDir: true,
-    rollupOptions: {
-      input: path.resolve(__dirname, "index.html"),
-    },
-  },
+  root: ".", // root is project root where index.html lives
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src"), // if you have a src folder, otherwise remove
+    },
+  },
+  build: {
+    outDir: "dist", // build output folder
+    emptyOutDir: true,
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"), // point to root index.html
     },
   },
 });
